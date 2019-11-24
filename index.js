@@ -32,6 +32,11 @@ const destinations = [
   },
 ]
 
+const createMovingMarkerPath = (destinations) => {
+  return destinations.map(x => [x.coords.lat, x.coords.lon])
+    .concat([ [ destinations[0].coords.lat, destinations[0].coords.lon ] ])
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   const mymap = L.map('mapid').setView(tasmania, 7)
 
@@ -61,4 +66,13 @@ document.addEventListener('DOMContentLoaded', () => {
       opacity: 1
     }).openTooltip();
   }
+
+  let points = [
+    [-41.4332, 147.1441],
+    [-42.1, 148.31],
+    [-42.8821, 147.3272],
+    [-41.4332, 147.1441],
+  ]
+
+  L.Marker.movingMarker(createMovingMarkerPath(destinations), [1000, 1000, 1000]).addTo(mymap).start()
 })
